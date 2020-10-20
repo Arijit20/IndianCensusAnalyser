@@ -20,7 +20,7 @@ public class CensusAnalyser {
 	}
 
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))){
-			Iterator<CsvStateCensus> csvStateCensusIterator = this.getCsvFileIterator(reader, CsvStateCensus.class);
+			Iterator<CsvStateCensus> csvStateCensusIterator = new OpenCsvBuilder().getCsvFileIterator(reader, CsvStateCensus.class);
 			return this.getCount(csvStateCensusIterator );
 		} catch (IOException e) {
 			throw new CensusAnalyserException("File not found", CensusAnalyserException.ExceptionType.WRONG_CSV);
@@ -38,7 +38,7 @@ public class CensusAnalyser {
 	}
 
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))){
-			Iterator<CsvStateCode> csvStateCensusIterator = this.getCsvFileIterator(reader, CsvStateCode.class);
+			Iterator<CsvStateCode> csvStateCensusIterator = new OpenCsvBuilder().getCsvFileIterator(reader, CsvStateCode.class);
 			return this.getCount(csvStateCensusIterator);
 		} catch (IOException e) {
 			throw new CensusAnalyserException("File not found", CensusAnalyserException.ExceptionType.WRONG_CSV);
@@ -47,17 +47,6 @@ public class CensusAnalyser {
 		}
 		catch(RuntimeException e) {
 			throw new CensusAnalyserException("File internal data not proper", CensusAnalyserException.ExceptionType.INTERNAL_ISSUE);
-		}
-	}
-	
-	private<E> Iterator<E> getCsvFileIterator(Reader reader, Class<E> csvClass) throws CensusAnalyserException{
-		try {
-			CsvToBeanBuilder<E> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
-			CsvToBean<E> csvToBean = csvToBeanBuilder.withType(csvClass)
-					                             .withIgnoreLeadingWhiteSpace(true).build();
-			return csvToBean.iterator();
-		}catch(IllegalStateException e){
-			throw new CensusAnalyserException(e.getMessage(),CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE);
 		}
 	}
 	

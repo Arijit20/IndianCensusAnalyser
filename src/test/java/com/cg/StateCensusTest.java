@@ -24,4 +24,22 @@ public class StateCensusTest {
 			int noOfEntries = censusAnalyser.loadStateCsvData(STATE_CENSUS_FILE_PATH);
 			Assert.assertEquals(29, noOfEntries);
 		}
+	   
+	   @Test
+		public void givenStateCensus_WrongCSVFile_ShouldThrowException()  {
+		   try {
+			censusAnalyser.loadStateCsvData(STATE_CENSUS_WRONG_FILE_PATH);
+		   }catch(CensusAnalyserException e) {
+			   Assert.assertEquals(CensusAnalyserException.ExceptionType.WRONG_CSV, e.type);
+		   }
+		}
+	   
+	   @Test
+		public void givenStateCensus_WrongType_ShouldThrowException()  {
+		   try {
+			censusAnalyser.loadStateCsvData(STATE_CENSUS_WRONG_TYPE_FILE_PATH);
+		   }catch(CensusAnalyserException e) {
+			   Assert.assertEquals(CensusAnalyserException.ExceptionType.WRONG_TYPE, e.type);
+		   }
+		}
 }

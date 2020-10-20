@@ -42,4 +42,22 @@ public class StateCensusTest {
 			   Assert.assertEquals(CensusAnalyserException.ExceptionType.WRONG_TYPE, e.type);
 		   }
 		}
+	   
+	   @Test
+		public void givenStateCensus_WrongHeader_ShouldThrowException()  {
+		   try {
+			censusAnalyser.loadStateCsvData(STATE_CENSUS_WRONG_HEADER_FILE_PATH);
+		   }catch(CensusAnalyserException e) {
+			   Assert.assertEquals(CensusAnalyserException.ExceptionType.INTERNAL_ISSUE, e.type);
+		   }
+		}
+	   
+	   @Test
+		public void givenStateCensus_WrongDelimiter_ShouldThrowException()  {
+		   try {
+			censusAnalyser.loadStateCsvData(STATE_CENSUS_WRONG_DELIMITER_FILE_PATH);
+		   }catch(CensusAnalyserException e) {
+			   Assert.assertEquals(CensusAnalyserException.ExceptionType.INTERNAL_ISSUE, e.type);
+		   }
+		}
 }

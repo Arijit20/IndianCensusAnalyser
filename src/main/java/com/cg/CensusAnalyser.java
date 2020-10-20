@@ -25,6 +25,8 @@ public class CensusAnalyser {
 		}
 		catch(RuntimeException e) {
 			throw new CensusAnalyserException("File internal data not proper", CensusAnalyserException.ExceptionType.INTERNAL_ISSUE);
+		} catch (CsvException e) {
+			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE);
 		}
 	}
 	
@@ -44,6 +46,8 @@ public class CensusAnalyser {
 		}
 		catch(RuntimeException e) {
 			throw new CensusAnalyserException("File internal data not proper", CensusAnalyserException.ExceptionType.INTERNAL_ISSUE);
+		} catch (CsvException e) {
+			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE);
 		}
 	}
 	

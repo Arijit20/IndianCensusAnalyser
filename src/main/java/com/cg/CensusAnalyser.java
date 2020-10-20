@@ -44,11 +44,11 @@ public class CensusAnalyser {
 	}
 
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))){
-			CsvToBeanBuilder<CsvStateCensus> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
-			CsvToBean<CsvStateCensus> csvToBean = csvToBeanBuilder.withType(CsvStateCensus.class)
+			CsvToBeanBuilder<CsvStateCode> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
+			CsvToBean<CsvStateCode> csvToBean = csvToBeanBuilder.withType(CsvStateCode.class)
 					                             .withIgnoreLeadingWhiteSpace(true).build();
-			Iterator<CsvStateCensus> csvStateCensusIterator = csvToBean.iterator();
-			List<CsvStateCensus> stateList = new ArrayList<CsvStateCensus>();
+			Iterator<CsvStateCode> csvStateCensusIterator = csvToBean.iterator();
+			List<CsvStateCode> stateList = new ArrayList<CsvStateCode>();
 			while(csvStateCensusIterator.hasNext()) {
 				stateList.add(csvStateCensusIterator.next());
 			}

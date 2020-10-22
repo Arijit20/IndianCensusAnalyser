@@ -89,6 +89,15 @@ List<CsvStateCode> csvStateCodeList;
 		return new Gson().toJson(csvStateCensusList);
 	}
 	
+	public String getStatePopulationDensityWiseSortedCensusData() throws CensusAnalyserException {
+		if(csvStateCensusList == null || csvStateCensusList.size() == 0) {
+			throw new CensusAnalyserException("File is empty", CensusAnalyserException.ExceptionType.NO_DATA);
+		}
+		Collections.sort(csvStateCensusList, Comparator.comparing(census -> census.densityPerSqKm));
+		Collections.reverse(csvStateCensusList);
+		return new Gson().toJson(csvStateCensusList);
+	}
+	
 	public String getStateCodeWiseSortedCensusData() throws CensusAnalyserException {
 		if(csvStateCodeList == null || csvStateCodeList.size() == 0) {
 			throw new CensusAnalyserException("File is empty", CensusAnalyserException.ExceptionType.NO_DATA);

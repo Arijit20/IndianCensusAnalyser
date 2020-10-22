@@ -5,6 +5,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -15,9 +16,9 @@ import com.google.gson.Gson;
 public class CensusAnalyser {
 	
 List<CsvStateCensus> csvStateCensusList;
+List<CsvStateCode> csvStateCodeList;
 	
 	public CensusAnalyser() {
-		this.csvStateCensusList = new ArrayList<CsvStateCensus>();
 	}
 	 
   
@@ -49,8 +50,8 @@ List<CsvStateCensus> csvStateCensusList;
 
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))){
 			com.cg.csvbuilder.ICsvBuilder csvBuilder = com.cg.csvbuilder.CsvBuilderFactory.createCsvBuilder();
-			csvStateCensusList = csvBuilder.getCsvFileIList(reader, CsvStateCode.class);
-			return csvStateCensusList.size();
+			csvStateCodeList = csvBuilder.getCsvFileIList(reader, CsvStateCode.class);
+			return csvStateCodeList.size();
 		} catch (IOException e) {
 			throw new CensusAnalyserException("File not found", CensusAnalyserException.ExceptionType.WRONG_CSV);
 		}catch(NullPointerException e) {
@@ -77,6 +78,14 @@ List<CsvStateCensus> csvStateCensusList;
 			this.sort( censusComparator);
 			String sortedStateCensus = new Gson().toJson(csvStateCensusList);
 			return sortedStateCensus;
+	}
+	
+	public String getStateCodeWiseSortedCensusData() throws CensusAnalyserException {
+		if(csvStateCodeList == null || csvStateCodeList.size() == 0) {
+			throw new CensusAnalyserException("File is empty", CensusAnalyserException.ExceptionType.NO_DATA);
+		}
+		Collections.sort(csvStateCodeList, Comparator.comparing(code -> code.stateCode));
+		return new Gson().toJson(csvStateCodeList);
 	}
 
 	private void sort(Comparator<CsvStateCensus> censusComparator) {

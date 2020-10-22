@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.gson.Gson;
+
 public class StateCodeTest {
 	private CensusAnalyser censusAnalyser;
 	
@@ -59,4 +61,11 @@ public class StateCodeTest {
 			   Assert.assertEquals(CensusAnalyserException.ExceptionType.WRONG_TYPE, e.type);
 		   }
 		}
+	   @Test
+	   public void censusSortedOnStateCode() throws CensusAnalyserException {
+		   censusAnalyser.loadStateCode(STATE_CODE_FILE_PATH);
+		   String sortedCensusData = censusAnalyser.getStateCodeWiseSortedCensusData();
+		  CsvStateCode[] censusCsv = new Gson().fromJson(sortedCensusData, CsvStateCode[].class);
+		  Assert.assertEquals("AD", censusCsv[0].stateCode);
+	   }
 }

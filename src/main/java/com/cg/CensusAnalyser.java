@@ -25,7 +25,7 @@ List<CsvStateCensus> csvStateCensusList;
 	}
 
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))){
-			com.cg.csvbuilder.ICsvBuilder csvBuilder = com.cg.csvbuilder.CsvBuilderFactory.createCsvBuilder();
+			com.cg.commoncsv.ICsvBuilder csvBuilder = com.cg.commoncsv.CsvBuilderFactory.createCsvBuilder();
 			csvStateCensusList = csvBuilder.getCsvFileIList(reader, CsvStateCensus.class);
 			return csvStateCensusList.size();
 		} catch (IOException e) {
@@ -35,7 +35,7 @@ List<CsvStateCensus> csvStateCensusList;
 		}
 		catch(RuntimeException e) {
 			throw new CensusAnalyserException("File internal data not proper", CensusAnalyserException.ExceptionType.INTERNAL_ISSUE);
-		} catch (com.cg.csvbuilder.CsvException e) {
+		} catch (com.cg.commoncsv.CsvException e) {
 			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE);
 		}
 	}
@@ -46,7 +46,7 @@ List<CsvStateCensus> csvStateCensusList;
 	}
 
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))){
-			com.cg.csvbuilder.ICsvBuilder csvBuilder = com.cg.csvbuilder.CsvBuilderFactory.createCsvBuilder();
+			com.cg.commoncsv.ICsvBuilder csvBuilder = com.cg.commoncsv.CsvBuilderFactory.createCsvBuilder();
 			csvStateCensusList = csvBuilder.getCsvFileIList(reader, CsvStateCode.class);
 			return csvStateCensusList.size();
 		} catch (IOException e) {
@@ -56,7 +56,7 @@ List<CsvStateCensus> csvStateCensusList;
 		}
 		catch(RuntimeException e) {
 			throw new CensusAnalyserException("File internal data not proper", CensusAnalyserException.ExceptionType.INTERNAL_ISSUE);
-		} catch (com.cg.csvbuilder.CsvException e) {
+		} catch (com.cg.commoncsv.CsvException e) {
 			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE);
 		}
 	}
